@@ -5,7 +5,6 @@
   "logo": "https://رابط/الشعار",
   "keywords": ["python", "telebot", "pytube"],
   "addons": [],
-  "stack": "heroku-22",
   "buildpacks": [
     {
       "url": "heroku/python"
