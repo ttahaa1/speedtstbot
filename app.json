@@ -1,0 +1,26 @@
+{
+  "name": "بودي",
+  "description": "بوت تحميل من يوت يوب ",
+  "repository": "https://github.com/مستودع/المشروع",
+  "logo": "https://رابط/الشعار",
+  "keywords": ["python", "telebot", "pytube"],
+  "addons": [],
+  "stack": "heroku-20",
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "env": {
+    "TOKEN": {
+      "description": "توكن التليجرام للبوت",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+}
