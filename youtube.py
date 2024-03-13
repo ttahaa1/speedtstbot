@@ -9,7 +9,7 @@ from telebot import types
 #@KOK0KK
 #المطور
 
-bot = telebot.TeleBot('6356487686:AAEI6DXvbu5YzDn1D-xyt2Ry89zWCOoTQwk')
+bot = telebot.TeleBot('66888638576:AAGzMZngCk_U6Cj07V4-Cnfm6idFe1R-4p8')
 #@KOK0KK
 print(' Go Bot /Start ')
 @bot.message_handler(commands=['start'])
