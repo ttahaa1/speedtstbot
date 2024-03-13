@@ -1,22 +1,25 @@
 from pytube import YouTube
+
 import os
+#@KOK0KK
+
 import telebot 
 import random
 from telebot import types
-from flask import Flask, request
+#@KOK0KK
+#المطور
 
-# تهيئة البوت
 bot = telebot.TeleBot('6356487686:AAEI6DXvbu5YzDn1D-xyt2Ry89zWCOoTQwk')
-
-# نقطة النهاية للويبهوك والتي يتصل بها Heroku
-server = Flask(__name__)
-
-# رابط التوكن الخاص بالبوت
-TOKEN = '6634907418:AAHcYzt6-YZ1yjyHsUSL3HRAxsM50GoTEIU'
-
+#@KOK0KK
+print(' Go Bot /Start ')
 @bot.message_handler(commands=['start'])
 def message1(message):
     id1 = str(message.from_user.id)
+    #@KOK0KK
+    #@KOK0KK
+
+
+    
     ty = types.InlineKeyboardButton(text='دخول البوت',callback_data='ty')
     kj = types.InlineKeyboardMarkup(keyboard=[[ty]])
     bot.send_message(message.chat.id,'*اهلا بك في بوت تحميل من اليوتيوب*',parse_mode='markdown',reply_markup=kj)
@@ -30,9 +33,51 @@ def call(call):
         ncc.add(nc,cn)
         bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id,text='*اختار التحميل المناسب*',reply_markup=ncc,parse_mode='markdown')
     elif call.data =='nc':
-        message = bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id,text='*ارسل الان رابط المقطع من فضلك*',parse_mode='markdown')
+        mk = types.InlineKeyboardButton(text='قناة مطور لبوت',url='https://t.me/JG0Bot')
+        mk1 = types.InlineKeyboardMarkup(row_width=1)
+        mk1.add(mk)
+        message = bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id,text='*ارسل الان رابط المقطع من فضلك*',reply_markup=mk1,parse_mode='markdown')
+        bot.register_next_step_handler(message,m1,message.id)
+    elif call.data =='cn':
+        mk = types.InlineKeyboardButton(text='قناة البوت',url='https://t.me/JG0Bot')
+        mk1 = types.InlineKeyboardMarkup(row_width=1)
+        mk1.add(mk)
+        message = bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id,text='*ارسل الان رابط المقطع من فضلك*',reply_markup=mk1,parse_mode='markdown')
         bot.register_next_step_handler(message,m2,message.id)
+    #@KOK0KK
+    #@KOK0KK
+def m1(message,id):
+    id1 = str(message.from_user.id)
+    me = str(message.text)
+    if ('https') in me :
+        #@KOK0KK
+        #@KOK0KK
+        ty = types.InlineKeyboardButton(text='مبرمج البوت',url='https://t.me/KOK0KK')
+        kj = types.InlineKeyboardMarkup(keyboard=[[ty]])
+        bot.edit_message_text(chat_id=message.chat.id,message_id=id,text='*جار التحميل الان..*',reply_markup=kj,parse_mode='markdown')
+        video_url = me
+        yt = YouTube(video_url)
+        video = yt.streams.first()
+        video.download()
+        #@KOK0KK
 
+    
+        filem = video.default_filename
+     
+        ki='qwertyuioplkjhgfdsazxcvbn'
+        uo = str(''.join(random.choice(ki)for ii in range(4)))
+        #@KOK0KK
+       
+        namenew = f'{uo}.mp4'
+        os.rename(filem, namenew)
+        bot.send_video(id1,video=open(f'{uo}.mp4','rb'),caption='*تم التحميل بنجاح*',parse_mode='markdown',reply_markup=kj)
+        os.remove(filem)
+        os.remove(f'{uo}.mp4')
+ #@KOK0KK       
+    else:
+        mi = types.InlineKeyboardButton(text='القائمة الرئسية',callback_data='ty')
+        mi1 = types.InlineKeyboardMarkup(row_width=2);mi1.add(mi)
+        bot.edit_message_text(chat_id=message.chat.id,message_id=id,text='*عذرا ارسل رابط صحيح من فضلك*',parse_mode='markdown',reply_markup=mi1)
 def m2(message,id):
     id1 = str(message.from_user.id)
     me = str(message.text)
@@ -44,6 +89,7 @@ def m2(message,id):
         yt = YouTube(video_url)
         video = yt.streams.first()
         video.download()
+#@KOK0KK
     
         filem = video.default_filename
      
@@ -55,21 +101,36 @@ def m2(message,id):
             bot.send_audio(id1,ad,caption='*تم التحميل بنجاح*',parse_mode='markdown')
             os.remove(filem)
             os.remove(f'{rr}.mp3')   
+            #@KOK0KK 
     else:
         mi = types.InlineKeyboardButton(text='القائمة الرئسية',callback_data='ty')
         mi1 = types.InlineKeyboardMarkup(row_width=2);mi1.add(mi)
         bot.edit_message_text(chat_id=message.chat.id,message_id=id,text='*عذرا ارسل رابط صحيح من فضلك*',parse_mode='markdown',reply_markup=mi1)
+#@KOK0KK
 
-@server.route("/" + TOKEN, methods=['POST'])
-def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-    return "!", 200
 
-@server.route("/")
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url="https://your-heroku-app.herokuapp.com/" + TOKEN)
-    return "!", 200
 
-if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+#@KOK0KK
+def main():
+    #@KOK0KK  
+    while True:
+        
+        try:
+            
+            bot.polling()
+            
+        except:
+            import os
+            os.system('clear')
+#@KOK0KK
+            main()
+        
+        main()
+        
+    main()
+    
+main()
+
+
+#حقوق @KOK0KK تخمط اضحك  فضيحه صبر شريف وخلي يوزر لمطور
+#@KOK0KK
