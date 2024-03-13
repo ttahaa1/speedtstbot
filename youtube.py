@@ -6,7 +6,7 @@ from telebot import types
 from flask import Flask, request
 
 # تهيئة البوت
-bot = telebot.TeleBot('6634907418:AAHcYzt6-YZ1yjyHsUSL3HRAxsM50GoTEIU')
+bot = telebot.TeleBot('6356487686:AAEI6DXvbu5YzDn1D-xyt2Ry89zWCOoTQwk')
 
 # نقطة النهاية للويبهوك والتي يتصل بها Heroku
 server = Flask(__name__)
