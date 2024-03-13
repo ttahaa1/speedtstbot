@@ -1,6 +1,2 @@
-pytube
-telebot
-random
-request
-types
-YouTube
+pytube==10.6.0
+telebot==0.0.4
