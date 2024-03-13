@@ -1,1 +1,2 @@
-web: python-3.8 youtube.py
+pip freeze > requirements.txt
+web: python youtube.py 
