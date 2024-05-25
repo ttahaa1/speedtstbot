@@ -15,6 +15,9 @@ BOT_TOKEN = "6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE"
 # معرف التليجرام الخاص بك
 ADMIN_CHAT_ID = "6264668799"
 
+# قائمة لتخزين الرسائل
+messages_list = []
+
 # دالة بدء التشغيل
 async def start(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text('مرحباً! كيف يمكنني مساعدتك؟')
@@ -27,15 +30,17 @@ async def echo(update: Update, context: CallbackContext) -> None:
     user_name = update.message.chat.username
     message_date = update.message.date  # استرجاع وقت استقبال الرسالة
 
+    # إضافة الرسالة إلى قائمة الرسائل
+    messages_list.append({
+        "text": user_message,
+        "user_id": user_id,
+        "user_name": user_name,
+        "message_date": message_date
+    })
+
     # إرسال رسالة إلى المستخدم
     await update.message.reply_text(f"لقد تلقيت رسالتك: {user_message}")
-    logger.info(f"Message from {user_name}:  (ID: 
-    
-    {user_id}): : 
-    
-    {user_message}"
-               
-                 )
+    logger.info(f"Message from {user_name} (ID: {user_id}): {user_message}")
 
     # إرسال إشعار إلى الأدمن
     try:
