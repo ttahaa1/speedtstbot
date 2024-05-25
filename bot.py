@@ -46,7 +46,8 @@ async def echo(update: Update, context: CallbackContext) -> None:
     try:
         await context.bot.send_message(
             chat_id=ADMIN_CHAT_ID,
-            text=f"رسالة جديدة من {user_name} (ID: {user_id}) في {message_date}: {user_message}"  # إضافة وقت الرسالة
+            text=f"رسالة جديدة من {user_name} (ID: {user_id}) في {message_date}: {user_message}",  # إضافة وقت الرسالة
+            reply_to_message_id=update.message.message_id  # الرد على الرسالة الأصلية
         )
         logger.info(f"Notification sent to admin: {ADMIN_CHAT_ID}")
     except Exception as e:
