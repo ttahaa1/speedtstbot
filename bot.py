@@ -11,13 +11,14 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # توكن البوت
-BOT_TOKEN = "6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE"
+BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
 # معرف التليجرام الخاص بك
-ADMIN_CHAT_ID = "@KOK0KK"
+ADMIN_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID"
 
 # دالة بدء التشغيل
 async def start(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text('مرحباً! كيف يمكنني مساعدتك؟')
+    logger.info("Start command received")
 
 # دالة الرد على الرسائل النصية وإشعارك
 async def echo(update: Update, context: CallbackContext) -> None:
@@ -27,12 +28,21 @@ async def echo(update: Update, context: CallbackContext) -> None:
 
     # إرسال رسالة إلى المستخدم
     await update.message.reply_text(f"لقد تلقيت رسالتك: {user_message}")
+    logger.info(f"Message from {user_name} (ID: {user_id}): {user_message}")
 
     # إرسال إشعار إلى الأدمن
-    await context.bot.send_message(
-        chat_id=ADMIN_CHAT_ID,
-        text=f"رسالة جديدة من {user_name} (ID: {user_id}): {user_message}"
-    )
+    try:
+        await context.bot.send_message(
+            chat_id=ADMIN_CHAT_ID,
+            text=f"رسالة جديدة من {user_name} (ID: {user_id}): {user_message}"
+        )
+        logger.info(f"Notification sent to admin: {ADMIN_CHAT_ID}")
+    except Exception as e:
+        logger.error(f"Failed to send notification: {e}")
+
+# دالة تسجيل الأخطاء
+def error(update: object, context: CallbackContext) -> None:
+    logger.warning(f'Update "{update}" caused error "{context.error}"')
 
 def main() -> None:
     # إعداد البوت باستخدام التوكن
@@ -43,7 +53,7 @@ def main() -> None:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
 
     # تسجيل الأخطاء
-    application.add_error_handler(lambda update, context: logger.warning(f'Update "{update}" caused error "{context.error}"'))
+    application.add_error_handler(error)
 
     # بدء تشغيل البوت
     application.run_polling()
