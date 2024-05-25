@@ -22,7 +22,7 @@ updater.dispatcher.add_handler(start_handler)
 forward_handler = MessageHandler(Filters.text & (~Filters.command), forward_message)
 updater.dispatcher.add_handler(forward_handler)
 
-reply_handler = MessageHandler(Filters.reply, reply_message)
+reply_handler = MessageHandler(filters.Reply, reply_message)
 updater.dispatcher.add_handler(reply_handler)
 
 updater.start_polling()
