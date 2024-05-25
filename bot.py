@@ -14,7 +14,7 @@ def forward_message(update, context):
         message = f"{user_name}: {update.message.text}"
         context.bot.forward_message(chat_id='6264668799', from_chat_id=update.message.chat_id, message_id=update.message.message_id)
         reply_text = "تم إرسال رسالتك بنجاح وسأقوم بالرد عليك في أقرب وقت ممكن."
-        context.bot.send_message(chat_id=forwarded_from_user_id, text=reply_text)
+        context.bot.send_message(chat_id=update.message.chat_id, text=reply_text)
     else:
         context.bot.send_message(chat_id=update.message.chat_id, text="عذراً، لا يمكن إعادة إرسال رسالتك.")
 
