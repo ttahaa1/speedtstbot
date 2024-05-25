@@ -25,6 +25,7 @@ async def echo(update: Update, context: CallbackContext) -> None:
     user_message = update.message.text
     user_id = update.message.chat_id
     user_name = update.message.chat.username
+    message_date = update.message.date  # استرجاع وقت استقبال الرسالة
 
     # إرسال رسالة إلى المستخدم
     await update.message.reply_text(f"لقد تلقيت رسالتك: {user_message}")
@@ -34,7 +35,7 @@ async def echo(update: Update, context: CallbackContext) -> None:
     try:
         await context.bot.send_message(
             chat_id=ADMIN_CHAT_ID,
-            text=f"رسالة جديدة من {user_name} (ID: {user_id}): {user_message}"
+            text=f"رسالة جديدة من {user_name} (ID: {user_id}) في {message_date}: {user_message}"  # إضافة وقت الرسالة
         )
         logger.info(f"Notification sent to admin: {ADMIN_CHAT_ID}")
     except Exception as e:
