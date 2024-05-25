@@ -29,7 +29,15 @@ async def echo(update: Update, context: CallbackContext) -> None:
 
     # إرسال رسالة إلى المستخدم
     await update.message.reply_text(f"لقد تلقيت رسالتك: {user_message}")
-    logger.info(f"Message from {user_name}:  (ID: {user_id}): : {user_message}")
+    logger.info(f"Message from 
+    
+    {user_name}:  (ID: 
+    
+    {user_id}): : 
+    
+    {user_message}"
+               
+                 )
 
     # إرسال إشعار إلى الأدمن
     try:
