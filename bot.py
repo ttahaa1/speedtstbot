@@ -7,7 +7,7 @@ except ImportError:
     os.system("pip install python-telegram-bot")
 
 # Import necessary modules
-from telegram.ext import Updater, MessageHandler
+from telegram.ext import Updater, MessageHandler, Filters
 
 # Define your bot token and your user ID
 TOKEN = '7094426542:AAGXW6_WzTFx9ovc4Ywtv8UPL-GuBiyI2ig'
@@ -15,7 +15,7 @@ YOUR_ID = '5691350382'
 
 # Define the function to forward messages
 def forward_message(update, context):
-    # Get the user ID of the sender
+    # Check the user ID of the sender
     user_id = update.message.from_user.id
     
     # If the user ID matches your ID, forward the message to yourself
@@ -28,9 +28,9 @@ updater = Updater(token=TOKEN, use_context=True)
 # Get the dispatcher to register handlers
 dispatcher = updater.dispatcher
 
-# Register a message handler to handle all incoming messages
-message_handler = MessageHandler(None, forward_message)
-dispatcher.add_handler(message_handler)
+# Register a message handler to handle incoming messages
+forward_handler = MessageHandler(Filters.text & (~Filters.command), forward_message)
+dispatcher.add_handler(forward_handler)
 
 # Start the bot
 updater.start_polling()
