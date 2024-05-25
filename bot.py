@@ -1,6 +1,6 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-updater = Updater(token='YOUR_BOT_TOKEN', use_context=True)
+updater = Updater(token='6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE', use_context=True)
 
 def start(update, context):
     welcome_message = "أهلاً بك في بوت التواصل! أرسل رسالتك وسأقوم بالرد عليك فيما بعد."
