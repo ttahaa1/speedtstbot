@@ -29,14 +29,13 @@ async def echo(update: Update, context: CallbackContext) -> None:
 
     # إرسال رسالة إلى المستخدم
     await update.message.reply_text(f"لقد تلقيت رسالتك: {user_message}")
-    logger.info(f"Message from {user_name}  {user_id} {user_message}")
+    logger.info(f"Message from {user_name}:  (ID: {user_id}): : {user_message}")
 
     # إرسال إشعار إلى الأدمن
     try:
         await context.bot.send_message(
             chat_id=ADMIN_CHAT_ID,
-            text=f"رسالة جديدة من {user_name} 
-            (ID: {user_id})  {message_date}: {user_message}"  # إضافة وقت الرسال
+            text=f"رسالة جديدة من {user_name} (ID: {user_id}) في {message_date}: {user_message}"  # إضافة وقت الرسالة
         )
         logger.info(f"Notification sent to admin: {ADMIN_CHAT_ID}")
     except Exception as e:
