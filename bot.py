@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 # توكن البوت
 BOT_TOKEN = "6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE"
 # معرف التليجرام الخاص بك
-ADMIN_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID"
+ADMIN_CHAT_ID = "@KOK0KK"
 
 # دالة بدء التشغيل
 async def start(update: Update, context: CallbackContext) -> None:
