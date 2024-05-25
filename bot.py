@@ -1,9 +1,6 @@
-import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-BOT_TOKEN = '6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE'  # قم بتعيين رمز الوصول الخاص بالبوت هنا
-
-updater = Updater(token=BOT_TOKEN, use_context=True)
+updater = Updater(token='6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE', use_context=True)
 
 def start(update, context):
     welcome_message = "أهلاً بك في بوت التواصل! أرسل رسالتك وسأقوم بالرد عليك فيما بعد."
@@ -27,7 +24,6 @@ updater.dispatcher.add_handler(forward_handler)
 
 reply_handler = MessageHandler(Filters.reply, reply_message)
 updater.dispatcher.add_handler(reply_handler)
-
 
 updater.start_polling()
 updater.idle()
