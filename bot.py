@@ -1,66 +1,62 @@
-from flask import Flask, request
 import requests
-from bs4 import BeautifulSoup
-import telegram
-from telegram.ext import Updater, CommandHandler
-import logging
+import json
+import os
 
-# إعداد تسجيل المعلومات
-logging.basicConfig(level=logging.INFO)
+API_KEY = "6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE"
+admin = "6264668799"
 
-app = Flask(__name__)
-TOKEN = '6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE'
-bot = telegram.Bot(token=TOKEN)
-updater = Updater(token=TOKEN, use_context=True)
-
-def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Welcome! Send /download followed by the TikTok video URL to get the download link.")
-
-def download(update, context):
-    if len(context.args) > 0:
-        tiktok_url = context.args[0]
-        download_link = get_download_link(tiktok_url)
-        if download_link:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"Here is your download link: {download_link}")
-        else:
-            context.bot.send_message(chat_id=update.effective_chat.id, text="Error retrieving download link.")
+def bot(method, datas=None):
+    url = f"https://api.telegram.org/bot{API_KEY}/{method}"
+    if datas:
+        response = requests.post(url, json=datas)
     else:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Please provide a TikTok video URL.")
+        response = requests.get(url)
+    content = response.content.decode("utf-8")
+    return json.loads(content)
 
-def get_download_link(tiktok_url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    }
-    data = {
-        'id': tiktok_url,
-        'locale': 'en',
-        'tt': 'Z2V0aW5mby5wb2w=',
-    }
-    response = requests.post('https://ssstik.io/abc', headers=headers, data=data)
+def handle_updates(update):
+    message = update.get("message")
+    callback_query = update.get("callback_query")
     
-    logging.info(f"Status Code: {response.status_code}")
-    logging.info(f"Response Text: {response.text}")
+    if message:
+        handle_message(message)
+    elif callback_query:
+        handle_callback_query(callback_query)
 
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
-        logging.info(f"Soup Content: {soup.prettify()}")  # طباعة محتوى الصفحة بشكل جميل
-        download_link = soup.find('a', {'id': 'download-link'})  # حاول إيجاد الرابط بناءً على معرفه
-        if download_link:
-            return download_link['href']
-        else:
-            logging.error("Download link not found in the response.")
-    else:
-        logging.error(f"Failed to retrieve the page, status code: {response.status_code}")
-    return None
+def handle_message(message):
+    # Handle incoming messages
+    text = message.get("text")
+    chat_id = message["chat"]["id"]
+    from_id = message["from"]["id"]
+    username = message["from"].get("username")
+    first_name = message["from"].get("first_name")
+    
+    # Your logic for handling messages
 
-start_handler = CommandHandler('start', start)
-download_handler = CommandHandler('download', download)
+def handle_callback_query(callback_query):
+    # Handle callback queries
+    data = callback_query["data"]
+    chat_id = callback_query["message"]["chat"]["id"]
+    message_id = callback_query["message"]["message_id"]
+    from_id = callback_query["from"]["id"]
+    first_name = callback_query["from"]["first_name"]
+    
+    # Your logic for handling callback queries
 
-dispatcher = updater.dispatcher
-dispatcher.add_handler(start_handler)
-dispatcher.add_handler(download_handler)
+def main():
+    # Main function to handle updates
+    webhook_data = json.loads(requests.get("https://api.telegram.org/bot{}/getWebhookInfo".format(API_KEY)).content.decode("utf-8"))
+    update = json.loads(requests.get(f"https://api.telegram.org/bot{API_KEY}/getMe").content.decode("utf-8"))
+    username = update["result"]["username"]
+    user = update["result"]["first_name"]
+    user_id = update["result"]["id"]
+    
+    # Your logic for handling updates
 
-updater.start_polling()
+    # Example: Listening for updates
+    update_data = json.loads(requests.get("php://input").content.decode("utf-8"))
+    if update_data:
+        handle_updates(update_data)
 
 if __name__ == "__main__":
-    app.run(port=8443)
+    main()
