@@ -3,6 +3,10 @@ import requests
 from bs4 import BeautifulSoup
 import telegram
 from telegram.ext import Updater, CommandHandler
+import logging
+
+# إعداد تسجيل المعلومات
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 TOKEN = '6743547187:AAGfhT8wv-Z9Ds2NP_xItJs0Ud89o0qvyYE'
@@ -28,11 +32,15 @@ def get_download_link(tiktok_url):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
     }
     data = {
-        'url': tiktok_url,
-        'lang': 'en'
+        'id': tiktok_url,
+        'locale': 'en',
+        'tt': 'Z2V0aW5mby5wb2w=',
     }
     response = requests.post('https://ssstik.io/abc', headers=headers, data=data)
     
+    logging.info(f"Status Code: {response.status_code}")
+    logging.info(f"Response Text: {response.text}")
+
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
         download_link = soup.find('a', {'id': 'download-link'})  # Adjust selector based on actual page structure
