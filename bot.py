@@ -43,9 +43,14 @@ def get_download_link(tiktok_url):
 
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
-        download_link = soup.find('a', {'id': 'download-link'})  # Adjust selector based on actual page structure
+        logging.info(f"Soup Content: {soup.prettify()}")  # طباعة محتوى الصفحة بشكل جميل
+        download_link = soup.find('a', {'id': 'download-link'})  # حاول إيجاد الرابط بناءً على معرفه
         if download_link:
             return download_link['href']
+        else:
+            logging.error("Download link not found in the response.")
+    else:
+        logging.error(f"Failed to retrieve the page, status code: {response.status_code}")
     return None
 
 start_handler = CommandHandler('start', start)
